@@ -13,9 +13,41 @@ import platform
 st.title('Generación Aumentada por Recuperación (RAG) 💬')
 st.write("Versión de Python:", platform.python_version())
 
-# Load and display image
+# Visual: fondo negro, texto blanco y fuente Roboto
+st.markdown(
+    """
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+    html, body, [data-testid="stAppViewContainer"], [data-testid="stMainContainer"] {
+        background-color: #000000 !important; /* fondo negro */
+    }
+    .stApp, .css-1outpf7, .css-2trqyj, .stText, .stMarkdown, .stButton, .stHeader, .stSubheader {
+        color: #FFFFFF !important; /* texto blanco */
+        font-family: 'Roboto', sans-serif !important; /* tipografía Roboto */
+    }
+    /* Ajustes extra para títulos y áreas de texto */
+    h1, h2, h3, h4, h5, h6, .stMarkdown p {
+        color: #FFFFFF !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+    /* Asegurar contraste en inputs y botones */
+    .stTextInput > div > input, .stTextArea > div > textarea, .stFileUploader, .stButton button {
+        background-color: rgba(255,255,255,0.04) !important;
+        color: #FFFFFF !important;
+        border: 1px solid rgba(255,255,255,0.08) !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Load and display image: usar la imagen proporcionada llamada 'imagen_robot.png'
 try:
-    image = Image.open('Chat_pdf.png')
+    if os.path.exists("imagen_robot.png"):
+        image = Image.open("imagen_robot.png")
+    else:
+        # fallback al nombre original si no existe la imagen nueva
+        image = Image.open('Chat_pdf.png')
     st.image(image, width=350)
 except Exception as e:
     st.warning(f"No se pudo cargar la imagen: {e}")
