@@ -13,40 +13,66 @@ import platform
 st.title('Generación Aumentada por Recuperación (RAG) 💬')
 st.write("Versión de Python:", platform.python_version())
 
-# Visual: fondo negro, texto blanco y fuente Roboto
+# Visual: fondo negro, texto blanco y fuente Roboto; además forzar sidebar negro
 st.markdown(
     """
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+    /* Fondo principal y tipografía */
     html, body, [data-testid="stAppViewContainer"], [data-testid="stMainContainer"] {
-        background-color: #000000 !important; /* fondo negro */
-    }
-    .stApp, .css-1outpf7, .css-2trqyj, .stText, .stMarkdown, .stButton, .stHeader, .stSubheader {
-        color: #FFFFFF !important; /* texto blanco */
-        font-family: 'Roboto', sans-serif !important; /* tipografía Roboto */
-    }
-    /* Ajustes extra para títulos y áreas de texto */
-    h1, h2, h3, h4, h5, h6, .stMarkdown p {
+        background-color: #000000 !important;
         color: #FFFFFF !important;
         font-family: 'Roboto', sans-serif !important;
     }
-    /* Asegurar contraste en inputs y botones */
-    .stTextInput > div > input, .stTextArea > div > textarea, .stFileUploader, .stButton button {
+
+    /* Forzar color y fuente en elementos comunes */
+    .stApp, .stText, .stMarkdown, .stButton, .stHeader, .stSubheader, .css-1d391kg {
+        color: #FFFFFF !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    /* Inputs, textarea, uploader y botones para contraste */
+    input, textarea, .stTextInput > div, .stTextArea > div, .stFileUploader, .stButton button {
         background-color: rgba(255,255,255,0.04) !important;
         color: #FFFFFF !important;
         border: 1px solid rgba(255,255,255,0.08) !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    /* Forzar fondo y texto de la barra lateral a negro/blanco */
+    section[data-testid="stSidebar"], div[data-testid="stSidebar"] {
+        background-color: #000000 !important;
+        color: #FFFFFF !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    /* Texto e inputs dentro de la sidebar */
+    section[data-testid="stSidebar"] input,
+    section[data-testid="stSidebar"] textarea,
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] .stMarkdown {
+        color: #FFFFFF !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    /* Quitar sombras/luces claras que manchen el fondo de la sidebar */
+    section[data-testid="stSidebar"] .css-1lcbmhc,
+    section[data-testid="stSidebar"] .css-1oe8mju,
+    section[data-testid="stSidebar"] .css-1v3fvcr {
+        background-color: transparent !important;
+        box-shadow: none !important;
     }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# Load and display image: usar la imagen proporcionada llamada 'imagen_robot.png'
+# Load and display image (intenta imagen_robot primero, si no existe usa Chat_pdf.png)
 try:
     if os.path.exists("imagen_robot.png"):
         image = Image.open("imagen_robot.png")
     else:
-        # fallback al nombre original si no existe la imagen nueva
         image = Image.open('Chat_pdf.png')
     st.image(image, width=350)
 except Exception as e:
